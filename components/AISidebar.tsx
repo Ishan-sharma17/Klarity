@@ -26,7 +26,6 @@ const MorningBriefCard: React.FC<{
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Only load if expanded or if we want to preload
         const loadBrief = async () => {
             setLoading(true);
             const data = await generateMorningBrief(tasks, user);
@@ -36,10 +35,12 @@ const MorningBriefCard: React.FC<{
             }, 800);
         };
         loadBrief();
-    }, [tasks, user]); // Reload if tasks change
+    }, [tasks, user]);
 
-    const currentDate = new Date().getDate();
-    const currentMonth = new Date().toLocaleString('default', { month: 'short' }).toUpperCase();
+    // Fixed date for demo consistency matching screenshot (Jan 18)
+    // In production, use new Date()
+    const currentDate = 18; // new Date().getDate();
+    const currentMonth = 'JAN'; // new Date().toLocaleString('default', { month: 'short' }).toUpperCase();
 
     // Timeline Row Component
     const TimelineRow = ({ 
@@ -54,33 +55,33 @@ const MorningBriefCard: React.FC<{
             {/* Timeline Column */}
             <div className="flex flex-col items-center shrink-0 w-12">
                 {dateBadge ? (
-                    <div className="w-12 h-12 rounded-2xl bg-[#202022] border border-zinc-700 flex flex-col items-center justify-center relative z-10 shadow-lg mb-1">
-                        <span className="text-[9px] font-bold text-red-500 uppercase leading-none mb-0.5">{dateBadge.month}</span>
-                        <span className="text-lg font-bold text-white leading-none">{dateBadge.day}</span>
+                    <div className="w-10 h-10 rounded-full bg-[#18181b] border-2 border-[#27272a] flex flex-col items-center justify-center relative z-10 shadow-lg">
+                        <span className="text-[8px] font-bold text-red-500 uppercase leading-none mb-0.5">{dateBadge.month}</span>
+                        <span className="text-sm font-bold text-white leading-none">{dateBadge.day}</span>
                     </div>
                 ) : (
-                    <div className="w-10 h-10 rounded-full bg-[#202022] border border-zinc-700 flex items-center justify-center relative z-10 shadow-lg text-blue-400 mb-1">
+                    <div className="w-10 h-10 rounded-full bg-[#18181b] border-2 border-[#27272a] flex items-center justify-center relative z-10 text-blue-500">
                         {icon}
                     </div>
                 )}
                 
-                {/* Connecting Line */}
+                {/* Connecting Line - precisely calculated to not overlap icons */}
                 {!isLast && (
-                    <div className="w-px bg-zinc-800 h-full absolute top-12 bottom-[-16px] left-1/2 -translate-x-1/2"></div>
+                    <div className="w-px bg-[#27272a] h-full absolute top-10 bottom-[-10px] left-1/2 -translate-x-1/2"></div>
                 )}
             </div>
 
             {/* Content Column */}
-            <div className="flex-1 pb-8">
+            <div className="flex-1 pb-10">
                 <h4 className="text-base font-bold text-white mb-2">{title}</h4>
-                <p className="text-sm text-zinc-400 leading-relaxed mb-3">
+                <p className="text-sm text-zinc-400 leading-relaxed mb-4">
                     {narrative}
                 </p>
-                <div className="flex items-center gap-3">
-                    <span className="inline-flex items-center px-3 py-1.5 bg-[#27272a] rounded-lg text-[11px] font-bold text-zinc-300 border border-zinc-700/50">
+                <div className="flex items-center gap-4">
+                    <span className="inline-flex items-center px-4 py-2 bg-[#27272a] rounded-xl text-xs font-bold text-zinc-300 border border-zinc-800">
                         {badge}
                     </span>
-                    <button className="px-3 py-1.5 rounded-lg text-[11px] font-bold text-zinc-500 hover:text-zinc-300 bg-transparent hover:bg-zinc-800 transition-colors">
+                    <button className="text-xs font-bold text-zinc-500 hover:text-zinc-300 transition-colors">
                         Read More
                     </button>
                 </div>
@@ -93,7 +94,7 @@ const MorningBriefCard: React.FC<{
         return (
             <div 
                 onClick={onToggle}
-                className="bg-[#18181b] border border-zinc-800 p-4 rounded-2xl cursor-pointer flex items-center justify-between shadow-sm hover:border-zinc-700 transition-all group"
+                className="bg-[#18181b] border border-zinc-800 p-4 rounded-2xl cursor-pointer flex items-center justify-between shadow-sm hover:border-zinc-700 transition-all group mb-4"
             >
                 <div className="flex items-center gap-4">
                     <div className="w-10 h-10 bg-amber-500/10 rounded-full flex items-center justify-center text-amber-500 border border-amber-500/20">
@@ -114,7 +115,7 @@ const MorningBriefCard: React.FC<{
     // Expanded State (Loading)
     if (loading) {
         return (
-            <div className="bg-[#121214] rounded-[32px] p-8 border border-zinc-800 shadow-2xl relative overflow-hidden flex flex-col items-center justify-center text-center space-y-4 min-h-[400px]">
+            <div className="bg-[#121214] rounded-[32px] p-8 border border-zinc-800 shadow-2xl relative overflow-hidden flex flex-col items-center justify-center text-center space-y-4 min-h-[400px] mb-4">
                 <div className="absolute inset-0 bg-white/5 blur-3xl rounded-full"></div>
                 <Sunrise size={48} className="text-zinc-500 relative z-10 animate-pulse" />
                 <div className="relative z-10">
@@ -129,24 +130,25 @@ const MorningBriefCard: React.FC<{
 
     // Expanded State (Content)
     return (
-        <div className="bg-[#121214] rounded-[32px] p-6 sm:p-8 border border-zinc-800 shadow-2xl relative overflow-hidden animate-in zoom-in-95 duration-300">
-            
-            {/* Header */}
-            <div className="flex justify-between items-start mb-8 relative z-10">
-                <div>
-                    <h2 className="text-2xl font-bold text-white mb-1 tracking-tight">
-                        {brief.headline}
-                    </h2>
-                    <p className="text-sm text-zinc-400 font-medium">
-                        {brief.subHeadline}
-                    </p>
-                </div>
+        <div className="bg-[#121214] rounded-[32px] p-8 border border-zinc-800 shadow-2xl relative overflow-hidden animate-in zoom-in-95 duration-300 mb-4 ring-1 ring-blue-500/20">
+            {/* Close Button Absolute */}
+            <div className="absolute top-6 right-6 z-20 flex gap-2">
                 <button 
                     onClick={(e) => { e.stopPropagation(); onToggle(); }}
-                    className="text-zinc-500 hover:text-zinc-300 bg-[#202022] p-2 rounded-full transition-colors"
+                    className="text-xs font-bold text-zinc-500 hover:text-zinc-300 uppercase tracking-wider flex items-center gap-1"
                 >
-                    <X size={16} />
+                    Skip Brief <X size={14} />
                 </button>
+            </div>
+
+            {/* Header */}
+            <div className="mb-10 relative z-10 pr-12">
+                <h2 className="text-2xl font-bold text-white mb-2 tracking-tight">
+                    {brief.headline}
+                </h2>
+                <p className="text-base text-zinc-400 font-medium">
+                    {brief.subHeadline}
+                </p>
             </div>
 
             {/* Timeline */}
@@ -162,7 +164,7 @@ const MorningBriefCard: React.FC<{
 
                 {/* Mail */}
                 <TimelineRow 
-                    icon={<Mail size={18} className="text-blue-500" />}
+                    icon={<Mail size={18} />}
                     title="Mail"
                     narrative={brief.mail.narrative}
                     badge={brief.mail.countLabel}
@@ -177,12 +179,6 @@ const MorningBriefCard: React.FC<{
                     isLast={true}
                 />
 
-            </div>
-            
-            <div className="mt-2 text-center border-t border-zinc-800/50 pt-4">
-                 <button onClick={(e) => { e.stopPropagation(); onToggle(); }} className="text-xs font-bold text-zinc-600 hover:text-zinc-400 uppercase tracking-widest">
-                     Close Brief
-                 </button>
             </div>
         </div>
     );
@@ -442,31 +438,6 @@ const AISidebar: React.FC<AISidebarProps> = ({ isOpen, onClose, tasks, user, onA
                         isExpanded={briefExpanded} 
                         onToggle={() => setBriefExpanded(!briefExpanded)} 
                     />
-
-                    {/* Signal Card (Only show if brief is collapsed to save space) */}
-                    {!briefExpanded && (
-                        <div className="bg-[#18181b] p-5 rounded-2xl border border-zinc-800 shadow-sm relative overflow-hidden group">
-                            {/* Decorative Flash */}
-                            <div className="absolute top-0 right-0 w-24 h-24 bg-purple-500/10 blur-[40px] pointer-events-none"></div>
-                            
-                            <div className="flex items-center justify-between mb-3 relative z-10">
-                                <div className="flex items-center gap-2 text-[11px] font-extrabold text-semantic-ai uppercase tracking-wider">
-                                    <Zap size={14} className="fill-current" />
-                                    Current Signal
-                                </div>
-                                <span className="text-[10px] font-bold text-zinc-400 bg-zinc-800 px-2 py-0.5 rounded-full border border-zinc-700">Live</span>
-                            </div>
-                            <p className="text-sm text-zinc-300 leading-relaxed font-medium mb-3">
-                                Your burnout score is trending up (42%). You have 4 hours of meetings today.
-                            </p>
-                            <button 
-                                onClick={() => setActiveTab('REFLECT')}
-                                className="text-xs font-bold text-semantic-ai hover:text-violet-400 flex items-center gap-1 group/link transition-colors"
-                            >
-                                Start weekly reflection <ArrowRight size={12} className="group-hover/link:translate-x-1 transition-transform" />
-                            </button>
-                        </div>
-                    )}
 
                     <div className="space-y-4 pt-2">
                         {messages.map((m, i) => (

@@ -74,7 +74,7 @@ const Header: React.FC<HeaderProps> = ({
               child = 'Workload';
               break;
           default:
-              child = currentView ? currentView.charAt(0) + currentView.slice(1).toLowerCase().replace('_', ' ') : 'Dashboard';
+              child = currentView ? (currentView as string).charAt(0) + (currentView as string).slice(1).toLowerCase().replace('_', ' ') : 'Dashboard';
       }
 
       return (

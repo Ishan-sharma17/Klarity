@@ -153,18 +153,18 @@ export interface ReflectionDraft {
 export const generateMorningBrief = async (tasks: Task[], user: User): Promise<MorningBrief> => {
     // Fallback data matching the visual reference style
     const fallback: MorningBrief = {
-        headline: `Good morning, ${user.name.split(' ')[0]}!`,
+        headline: `Good morning, ${user.name}!`,
         subHeadline: "Here's your morning brief for Today.",
         calendar: {
-            narrative: "Your schedule focuses on balancing oversight of the marketing campaign with final quality check sessions for the upcoming release.",
-            countLabel: "4 Review Sessions"
+            narrative: "Your day focuses on cross-departmental coordination and oversight of technical debt reduction.",
+            countLabel: "4 Strategy Meetings"
         },
         mail: {
-            narrative: "You have several updates regarding the mobile compatibility fixes and new feedback on the user research initiative.",
-            countLabel: "15 New Messages"
+            narrative: "Communication is centered around user research insights and the upcoming marketing campaign launch.",
+            countLabel: "14 New Emails"
         },
         tasks: {
-            narrative: "With database performance successfully optimized, today's priority shifts to addressing the payment bug and finalizing the design review.",
+            narrative: "Priority today should be placed on finalizing the quality checks and resolving the payment processing bug.",
             countLabel: "9 Active Tasks"
         }
     };
