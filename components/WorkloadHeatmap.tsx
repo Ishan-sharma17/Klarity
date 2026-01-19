@@ -32,7 +32,7 @@ const WorkloadHeatmap: React.FC<WorkloadHeatmapProps> = ({ users, data }) => {
           <div>
             <p className="text-xs text-slate-500 dark:text-zinc-500 font-medium uppercase tracking-wide">Team Burnout Risk</p>
             <h3 className="text-2xl font-bold text-slate-800 dark:text-zinc-100 mt-1">Medium</h3>
-            <p className="text-xs text-slate-400 dark:text-zinc-500 mt-1">2 members > 70% capacity</p>
+            <p className="text-xs text-slate-400 dark:text-zinc-500 mt-1">2 members &gt; 70% capacity</p>
           </div>
           <div className="p-2 bg-orange-100 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 rounded-lg">
             <AlertTriangle size={20} />
